@@ -57,12 +57,12 @@ def make_data_loader(cfg, is_train=True, is_distributed=False, max_iter=-1):
 
     dataset_name = cfg.train.dataset if is_train else cfg.test.dataset
 
-    transforms = make_transforms(cfg, is_train)
+    transforms = make_transforms(cfg, is_train)    #这里是给数据集的均值和标准差
     dataset = make_dataset(cfg, dataset_name, transforms, is_train)
-    sampler = make_data_sampler(dataset, shuffle)
+    sampler = make_data_sampler(dataset, shuffle)      #这个是采样，乱序采样
     batch_sampler = make_batch_data_sampler(cfg, sampler, batch_size, drop_last, max_iter)
     num_workers = cfg.train.num_workers
-    collator = make_collator(cfg)
+    collator = make_collator(cfg)    #这个collator不是很明白，翻译过来是校对整理
     data_loader = torch.utils.data.DataLoader(
         dataset,
         batch_sampler=batch_sampler,
