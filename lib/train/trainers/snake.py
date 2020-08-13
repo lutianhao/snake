@@ -9,7 +9,7 @@ class NetworkWrapper(nn.Module):
 
         self.net = net
 
-        self.ct_crit = net_utils.FocalLoss()
+        self.ct_crit = net_utils.FocalLoss()    #这几个是损失函数的初始化
         self.wh_crit = net_utils.IndL1Loss1d('smooth_l1')
         self.reg_crit = net_utils.IndL1Loss1d('smooth_l1')
         self.ex_crit = torch.nn.functional.smooth_l1_loss

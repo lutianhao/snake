@@ -12,7 +12,7 @@ _optimizer_factory = {
 def make_optimizer(cfg, net):
     params = []
     lr = cfg.train.lr
-    weight_decay = cfg.train.weight_decay
+    weight_decay = cfg.train.weight_decay   #权重衰减
 
     for key, value in net.named_parameters():
         if not value.requires_grad:
@@ -20,7 +20,7 @@ def make_optimizer(cfg, net):
         params += [{"params": [value], "lr": lr, "weight_decay": weight_decay}]
 
     if 'adam' in cfg.train.optim:
-        optimizer = _optimizer_factory[cfg.train.optim](params, lr, weight_decay=weight_decay)
+        optimizer = _optimizer_factory[cfg.train.optim](params, lr, weight_decay=weight_decay)   #不知道为啥额外的告诉了下adam权重衰减系数
     else:
         optimizer = _optimizer_factory[cfg.train.optim](params, lr, momentum=0.9)
 

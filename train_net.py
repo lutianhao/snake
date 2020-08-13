@@ -17,13 +17,13 @@ def train(cfg, network):
     begin_epoch = load_model(network, optimizer, scheduler, recorder, cfg.model_dir, resume=cfg.resume)
     # set_lr_scheduler(cfg, scheduler)
 
-    train_loader = make_data_loader(cfg, is_train=True)
+    train_loader = make_data_loader(cfg, is_train=True)  #到这里才读取的数据
     val_loader = make_data_loader(cfg, is_train=False)
 
     for epoch in range(begin_epoch, cfg.train.epoch):
         recorder.epoch = epoch
         trainer.train(epoch, train_loader, optimizer, recorder)
-        scheduler.step()
+        scheduler.step()      #optimizer.step()模型才会更新，scheduler.step()是用来调整lr的
 
         if (epoch + 1) % cfg.save_ep == 0:
             save_model(network, optimizer, scheduler, recorder, epoch, cfg.model_dir)
@@ -34,7 +34,7 @@ def train(cfg, network):
     return network
 
 
-def test(cfg, network):
+def test(cfg, network):  #此test指的是使用验证集进行测试，而非使用测试集
     trainer = make_trainer(cfg, network)
     val_loader = make_data_loader(cfg, is_train=False)
     evaluator = make_evaluator(cfg)

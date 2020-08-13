@@ -16,10 +16,10 @@ class Network(nn.Module):
                           down_ratio=down_ratio,
                           final_kernel=1,
                           last_level=5,
-                          head_conv=head_conv)
-        self.gcn = Evolution()
+                          head_conv=head_conv)    #DLA：Deep Layer Aggregation 是CenterNet中的一部分呢。
+        self.gcn = Evolution()  #GCN：Graph Convolutional Network图卷积网络
 
-    def decode_detection(self, output, h, w):
+    def decode_detection(self, output, h, w):   #这个应该就是把检测到的结果解码出来的
         ct_hm = output['ct_hm']
         wh = output['wh']
         ct, detection = snake_decode.decode_ct_hm(torch.sigmoid(ct_hm), wh)
@@ -27,7 +27,7 @@ class Network(nn.Module):
         output.update({'ct': ct, 'detection': detection})
         return ct, detection
 
-    def use_gt_detection(self, output, batch):
+    def use_gt_detection(self, output, batch):   #这个gt是否指的是ground truth ？
         _, _, height, width = output['ct_hm'].size()
         ct_01 = batch['ct_01'].byte()
 

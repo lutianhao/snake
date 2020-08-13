@@ -6,7 +6,7 @@ from torch.nn import DataParallel
 
 
 class Trainer(object):
-    def __init__(self, network):
+    def __init__(self, network):   #相当于把network放到gpu上去下面那个应该是多gpu用的
         network = network.cuda()
         network = DataParallel(network)
         self.network = network

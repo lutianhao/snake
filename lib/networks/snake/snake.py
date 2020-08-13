@@ -15,7 +15,7 @@ class CircConv(nn.Module):
         return self.fc(input)
 
 
-class DilatedCircConv(nn.Module):
+class DilatedCircConv(nn.Module):   #翻译是扩大的圆卷积
     def __init__(self, state_dim, out_state_dim=None, n_adj=4, dilation=1):
         super(DilatedCircConv, self).__init__()
 

@@ -10,7 +10,7 @@ class Evolution(nn.Module):
         super(Evolution, self).__init__()
 
         self.fuse = nn.Conv1d(128, 64, 1)
-        self.init_gcn = Snake(state_dim=128, feature_dim=64+2, conv_type='dgrid')
+        self.init_gcn = Snake(state_dim=128, feature_dim=64+2, conv_type='dgrid')  #这块的snake模型应该是对应论文中图3a中的三部分
         self.evolve_gcn = Snake(state_dim=128, feature_dim=64+2, conv_type='dgrid')
         self.iter = 2
         for i in range(self.iter):
@@ -18,12 +18,12 @@ class Evolution(nn.Module):
             self.__setattr__('evolve_gcn'+str(i), evolve_gcn)
 
         for m in self.modules():
-            if isinstance(m, nn.Conv1d) or isinstance(m, nn.Conv2d):
+            if isinstance(m, nn.Conv1d) or isinstance(m, nn.Conv2d):  #这里在重置每层的权重和偏置
                 m.weight.data.normal_(0.0, 0.01)
                 if m.bias is not None:
                     nn.init.constant_(m.bias, 0)
 
-    def prepare_training(self, output, batch):
+    def prepare_training(self, output, batch):   #看名字表示的是初始化预训练
         init = snake_gcn_utils.prepare_training(output, batch)
         output.update({'i_it_4py': init['i_it_4py'], 'i_it_py': init['i_it_py']})
         output.update({'i_gt_4py': init['i_gt_4py'], 'i_gt_py': init['i_gt_py']})
