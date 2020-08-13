@@ -15,6 +15,8 @@ import torch.utils.model_zoo as model_zoo
 
 from lib.networks.dcn_v2 import DCN
 
+#DLA的作用就是多尺度的融合，把不同尺度stage，size的信息融合在一起
+
 BN_MOMENTUM = 0.1
 logger = logging.getLogger(__name__)
 
@@ -426,7 +428,7 @@ class DLASeg(nn.Module):
     def __init__(self, base_name, heads, pretrained, down_ratio, final_kernel,
                  last_level, head_conv, out_channel=0):
         super(DLASeg, self).__init__()
-        assert down_ratio in [2, 4, 8, 16]
+        assert down_ratio in [2, 4, 8, 16]  #断言语句，用来判断down_ratio是否在24816中，不在就异常。
         self.first_level = int(np.log2(down_ratio))
         self.last_level = last_level
         self.base = globals()[base_name](pretrained=pretrained)
