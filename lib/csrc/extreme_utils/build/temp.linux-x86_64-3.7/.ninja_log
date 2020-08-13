@@ -1,0 +1,4 @@
+# ninja log v5
+1	23610	1588249397605568038	/home/tianhao.lu/code/Deep_snake/snake/lib/csrc/extreme_utils/build/temp.linux-x86_64-3.7/home/tianhao.lu/code/Deep_snake/snake/lib/csrc/extreme_utils/src/nms.o	5a25af84600fa89
+1	24600	1588249398598582047	/home/tianhao.lu/code/Deep_snake/snake/lib/csrc/extreme_utils/build/temp.linux-x86_64-3.7/home/tianhao.lu/code/Deep_snake/snake/lib/csrc/extreme_utils/src/utils.o	76c9852816b7be2a
+1	29407	1588249403398649762	/home/tianhao.lu/code/Deep_snake/snake/lib/csrc/extreme_utils/build/temp.linux-x86_64-3.7/home/tianhao.lu/code/Deep_snake/snake/lib/csrc/extreme_utils/utils.o	eb4c6deb8ddd3fac

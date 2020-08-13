@@ -41,17 +41,17 @@ class Evaluator:
             for i in range(len(label)):
                 instance_path = os.path.join(instance_dir, 'instance'+str(i)+'.png')
                 cv2.imwrite(instance_path, mask[i])
-                instance_path = os.path.join('../mask', img_id, 'instance'+str(i)+'.png')
+                instance_path = os.path.join('..\mask', img_id, 'instance'+str(i)+'.png')
                 f.write('{} {} {}\n'.format(instance_path, label[i], score[i]))
 
     def summarize(self):
         prediction = []
         gt = []
         for ann in self.anns:
-            split, city, file_name = ann.split('/')[-3:]
+            split, city, file_name = ann.split('\')[-3:]
             img_id = file_name.replace('.json', '')
             prediction.append(os.path.join(self.txt_dir, img_id+'.txt'))
-            gt.append(os.path.join('data/cityscapes/gtFine', split, city, img_id+'_gtFine_instanceIds.png'))
+            gt.append(os.path.join('data\cityscapes\gtFine', split, city, img_id+'_gtFine_instanceIds.png'))
         self.anns = []
         ap = evalInstanceLevelSemanticLabeling.evaluate(prediction, gt, self.result_dir)
         return {'ap': ap}

@@ -98,7 +98,7 @@ def read_dataset(ann_files, size=False, img_stat=False):
 
     ann_file = []
     for ann_file_dir in ann_files:
-        ann_file += glob.glob(os.path.join(ann_file_dir, '*/*.json'))
+        ann_file += glob.glob(os.path.join(ann_file_dir, '*\*.json'))
     if not size:
         stat_dict = dict(person=0, rider=0, car=0, truck=0, bus=0, train=0, motorcycle=0, bicycle=0)
     else:
@@ -122,7 +122,7 @@ def read_dataset(ann_files, size=False, img_stat=False):
 
 
 def visualize_stat_num():
-    ann_files = ('data/cityscapes/annotations/train', 'data/cityscapes/annotations/train_val')
+    ann_files = ('data\cityscapes\annotations\train', 'data\cityscapes\annotations\train_val')
     stat = read_dataset(ann_files, True, False)
     name = list(stat.keys())
     num = list(stat.values())

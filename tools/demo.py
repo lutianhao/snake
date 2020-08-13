@@ -66,4 +66,5 @@ def demo():
         batch['inp'] = torch.FloatTensor(batch['inp'])[None].cuda()
         with torch.no_grad():
             output = network(batch['inp'], batch)
+            # print('Output:{} /n Output.len:{}'.format(output, len(output)))  #得到这个output是个tensor
         visualizer.visualize(output, batch)

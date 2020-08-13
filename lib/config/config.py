@@ -6,7 +6,7 @@ cfg = CN()
 
 # model
 cfg.model = 'hello'
-cfg.model_dir = 'data/model'
+cfg.model_dir = 'data\model'
 
 # network
 cfg.network = 'dla_34'
@@ -18,7 +18,7 @@ cfg.heads = CN()
 cfg.task = ''
 
 # gpus
-cfg.gpus = [0]
+cfg.gpus = [1]
 
 # if load the pretrained network
 cfg.resume = True
@@ -52,10 +52,10 @@ cfg.test.batch_size = 1
 cfg.test.epoch = -1
 
 # recorder
-cfg.record_dir = 'data/record'
+cfg.record_dir = 'data\record'
 
 # result
-cfg.result_dir = 'data/result'
+cfg.result_dir = 'data\result'
 
 # evaluation
 cfg.skip_eval = False
@@ -77,7 +77,9 @@ def parse_cfg(cfg, args):
         raise ValueError('task must be specified')
 
     # assign the gpus
-    os.environ['CUDA_VISIBLE_DEVICES'] = ', '.join([str(gpu) for gpu in cfg.gpus])
+    # os.environ['CUDA_VISIBLE_DEVICES'] = ', '.join([str(gpu) for gpu in cfg.gpus])
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+    CUDA_VISIBLE_DEVICES = 1
 
     cfg.det_dir = os.path.join(cfg.model_dir, cfg.task, args.det)
 

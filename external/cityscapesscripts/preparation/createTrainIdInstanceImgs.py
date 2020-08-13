@@ -41,7 +41,7 @@ def main():
     else:
         cityscapesPath = os.path.join(os.path.dirname(os.path.realpath(__file__)),'..','..')
     # how to search for all ground truth
-    cityscapesPath = '/home/pengsida/Datasets/cityscape'
+    cityscapesPath = '\home\pengsida\Datasets\cityscape'
     searchFine   = os.path.join( cityscapesPath , "gtFine"   , "*" , "*" , "*_gt*_polygons.json" )
     searchCoarse = os.path.join( cityscapesPath , "gtCoarse" , "*" , "*" , "*_gt*_polygons.json" )
 
@@ -66,7 +66,7 @@ def main():
     progress = 0
     print("Progress: {:>3} %".format( progress * 100 / len(files) ), end=' ')
     for f in files:
-        f = '/home/pengsida/Datasets/cityscape/gtFine/val/frankfurt/frankfurt_000000_000294_gtFine_polygons.json'
+        f = '\home\pengsida\Datasets\cityscape\gtFine\val\frankfurt\frankfurt_000000_000294_gtFine_polygons.json'
         # create the output filename
         dst = f.replace( "_polygons.json" , "_instanceTrainIds.png" )
 

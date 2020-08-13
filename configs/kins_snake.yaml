@@ -2,17 +2,17 @@ model: 'kins'
 network: 'ro_34'
 task: 'snake'
 resume: true
-gpus: (0, 1, 2, 3, 4, 5, 6, 7)
+gpus: [1]
 
 train:
     optim: 'adam'
     lr: 1e-4
     milestones: (80, 120)
     gamma: 0.25
-    batch_size: 72
+    batch_size: 8
     dataset: 'KinsTrain'
     num_workers: 32
-    epoch: 150
+    epoch: 3
     scheduler: 'manual'
     gammas: [0.5, 0.1]
 test:

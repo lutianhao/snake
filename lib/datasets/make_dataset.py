@@ -13,7 +13,7 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 
 def _dataset_factory(data_source, task):
     module = '.'.join(['lib.datasets', data_source, task])
-    path = os.path.join('lib/datasets', data_source, task+'.py')
+    path = os.path.join('lib\datasets', data_source, task+'.py')
     dataset = imp.load_source(module, path).Dataset
     return dataset
 

@@ -5,7 +5,7 @@ import os
 
 def _wrapper_factory(cfg, network):
     module = '.'.join(['lib.train.trainers', cfg.task])
-    path = os.path.join('lib/train/trainers', cfg.task+'.py')
+    path = os.path.join('lib\train\trainers', cfg.task+'.py')
     network_wrapper = imp.load_source(module, path).NetworkWrapper(network)
     return network_wrapper
 

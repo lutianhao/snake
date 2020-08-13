@@ -63,7 +63,7 @@ def read_dataset(ann_files):
 
     ann_file = []
     for ann_file_dir in ann_files:
-        ann_file += glob.glob(os.path.join(ann_file_dir, '*/*.json'))
+        ann_file += glob.glob(os.path.join(ann_file_dir, '*\*.json'))
 
     ann_filter = []
     for fname in ann_file:
@@ -92,7 +92,7 @@ def process_info(fname, data_root):
             continue
         examples.append(instance)
 
-    img_path = os.path.join(data_root, '/'.join(ann[0]['img_path'].split('/')[-3:]))
+    img_path = os.path.join(data_root, '\'.join(ann[0]['img_path'].split('\')[-3:]))
     img_id = ann[0]['image_id']
 
     return examples, img_path, img_id

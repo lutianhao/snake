@@ -5,6 +5,7 @@ import numpy as np
 import torch
 from itertools import cycle
 import os
+import random
 
 mean = snake_config.mean
 std = snake_config.std
@@ -41,7 +42,7 @@ class Visualizer:
             poly = ex[i]
             poly = np.append(poly, [poly[0]], axis=0)
             ax.plot(poly[:, 0], poly[:, 1], color=color)
-
+        plt.savefig("/home/tianhao.lu/code/Deep_snake/snake/Result/Demo/eximg.jpg")
         plt.show()
 
     def visualize_training_box(self, output, batch):
@@ -80,7 +81,10 @@ class Visualizer:
             x_min, y_min, x_max, y_max = box[i]
             ax.plot([x_min, x_min, x_max, x_max, x_min], [y_min, y_max, y_max, y_min, y_min], color='w', linewidth=0.5)
 
-        plt.show()
+        filename = random.randint(0,100000)
+        plt.savefig("/home/tianhao.lu/code/Deep_snake/snake/Result/coco_test_result/%s.png"%filename)
+        # plt.savefig("/home/tianhao.lu/code/Deep_snake/snake/Result/Demo/trainboximg.jpg")
+        # plt.show()
 
     def visualize(self, output, batch):
         # self.visualize_ex(output, batch)

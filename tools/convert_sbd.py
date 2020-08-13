@@ -13,9 +13,9 @@ import scipy.io as scio
 import pycocotools.mask as mask_util
 
 
-root = "data/sbd"
-instance_dir = os.path.join(root, "inst/")
-image_dir = os.path.join(root, "img/")
+root = "data\sbd"
+instance_dir = os.path.join(root, "inst\")
+image_dir = os.path.join(root, "img\")
 txt_dir = root
 label_dir = os.path.join(root, "annotations")
 
@@ -53,7 +53,7 @@ def binary_mask_to_polygon(binary_mask, tolerance=0):
 
 
 def generate_anno(inst_path, images_info, annotations, count, mode, N=128):
-    seg_cls_name = os.path.join(root, 'cls', inst_path.split('/')[-1])
+    seg_cls_name = os.path.join(root, 'cls', inst_path.split('\')[-1])
     seg_cls_mat = scio.loadmat(seg_cls_name)
     semantic_mask = seg_cls_mat['GTcls']['Segmentation'][0][0]
 
@@ -62,7 +62,7 @@ def generate_anno(inst_path, images_info, annotations, count, mode, N=128):
 
     instance_ids = np.unique(instance_mask)
 
-    img_name = inst_path.split('/')[-1]
+    img_name = inst_path.split('\')[-1]
 
     imw = instance_mask.shape[1]
     imh = instance_mask.shape[0]
