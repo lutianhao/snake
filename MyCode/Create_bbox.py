@@ -13,8 +13,9 @@ import cv2
 #3.将矩形坐标等信息保存在新建的文件夹里面，可以是数值也可以是图片
 
 
-Pic_PATH = '../data/NICE1/NICE1/'
-Param_Save_PATH = '../data/NICE1/NICE1/coco/test/iris_edge_bbox/'
+Pic_PATH = '../data/NICE1/NICE1/coco_int'
+# Param_Save_PATH = '../data/NICE1/NICE1/coco_int/test/iris_edge_bbox/' #这里一个是iris一个是pupil，注意：要更改test、train、val
+Param_Save_PATH = '../data/NICE1/NICE1/coco_int/train/pupil_edge_bbox/'
 
 import os
 import cv2
@@ -43,7 +44,7 @@ def getFileList(dir, Filelist, ext=None):
     return Filelist
 
 
-org_img_folder = os.path.join(Pic_PATH,'test/iris_edge_mask')
+org_img_folder = os.path.join(Pic_PATH,'train/pupil_edge_mask')   #这里也要换一下！
 
 # 检索文件
 imglist = getFileList(org_img_folder, [], 'png')

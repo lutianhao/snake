@@ -9,13 +9,13 @@ train:
     lr: 1e-4
     milestones: (80, 120, 150, 170)
     gamma: 0.5
-    batch_size: 8
-    dataset: 'CocoTrain'
+    batch_size: 32
+    dataset: 'NICE1Train'
     num_workers: 32
-    epoch: 1
+    epoch: 2000
 test:
-    dataset: 'CocoMini'
+    dataset: 'NICE1Test'
     batch_size: 1
 
-heads: {'ct_hm': 80, 'wh': 2}
-segm_or_bbox: 'segm'
+heads: {'ct_hm': 2, 'wh': 2}
+segm_or_bbox: 'bbox'

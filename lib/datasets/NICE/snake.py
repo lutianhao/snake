@@ -7,30 +7,57 @@ from lib.utils import data_utils
 import torch.utils.data as data
 from pycocotools.coco import COCO
 from lib.config import cfg
+import json
 
 
 class Dataset(data.Dataset):
+
     def __init__(self, ann_file, data_root, split):
         super(Dataset, self).__init__()
 
         self.data_root = data_root
         self.split = split
-
+        print("ann file:{}".format(ann_file))
         self.coco = COCO(ann_file)
+        print("coco infos:{}".format(len(self.coco.dataset)))
+        # print("coco dataset:{}".format(self.coco.dataset))
+        # print("coco anns:{}".format(self.coco.anns))
+        # print("coco imgToAnns:{}".format(self.coco.imgToAnns))
+        # print("coco catToImgs:{}".format(self.coco.catToImgs))
+        # print("coco imgs:{}".format(self.coco.imgs))
+        # print("coco cats:{}".format(self.coco.cats))
+
         self.anns = sorted(self.coco.getImgIds())
         self.anns = np.array([ann for ann in self.anns if len(self.coco.getAnnIds(imgIds=ann, iscrowd=0))])
+        # print("coco anns:{}".format(self.anns))
         self.anns = self.anns[:500] if split == 'mini' else self.anns
         self.json_category_id_to_contiguous_id = {v: i for i, v in enumerate(self.coco.getCatIds())}
+        print("Datatset init finish!")
 
     def process_info(self, img_id):   #信息处理
+        # #只要返回的是那三个变量就行，不用非要调用coco
+        # anns = self.coco.dataset['annotations']
+        # print(len(anns[3]))
+        # # for tmp_anno in anns:
+        # #     print(tmp_anno)
+        # #     break
+        # anno = [tmp_anno for tmp_anno in self.anns if tmp_anno["image_id"] == str(img_id) ]
+        # path = os.path.join(self.data_root, self.coco.loadImgs(int(img_id))[0]['file_name'])
+        # print("anno: {}".format(anno))
+        # print("path: {}".format(path))
+        # print("img_id: {}".format(img_id))
         ann_ids = self.coco.getAnnIds(imgIds=img_id, iscrowd=0)
         anno = self.coco.loadAnns(ann_ids)
+        #拿到anno就行，上面两行代码可以自己写只要得到的变量构架一致就行
         path = os.path.join(self.data_root, self.coco.loadImgs(int(img_id))[0]['file_name'])
         return anno, path, img_id
 
     def read_original_data(self, anno, path):    #读取原始信息
         img = cv2.imread(path)
         instance_polys = [[np.array(poly).reshape(-1, 2) for poly in obj['segmentation']] for obj in anno]
+        # print("instance_polys type : {}".format(type(instance_polys)))
+        # print("instance_polys shape : {}".format(len(instance_polys))) #instance_polys是list
+        # print("instance_polys: {}".format(instance_polys))
         cls_ids = [self.json_category_id_to_contiguous_id[obj['category_id']] for obj in anno]
         return img, instance_polys, cls_ids
 
@@ -73,7 +100,7 @@ class Dataset(data.Dataset):
             extreme_points.append(points)
         return extreme_points
 
-    def prepare_detection(self, box, poly, ct_hm, cls_id, wh, reg, ct_cls, ct_ind):  #准备预测
+    def prepare_detection(self, box, poly, ct_hm, cls_id, wh, reg, ct_cls, ct_ind):  #准备原来尺寸的bbox吧？
         ct_hm = ct_hm[cls_id]
         ct_cls.append(cls_id)
 
@@ -135,7 +162,7 @@ class Dataset(data.Dataset):
 
         anno, path, img_id = self.process_info(ann)
         img, instance_polys, cls_ids = self.read_original_data(anno, path)
-        print("begin Write in log file...")
+        # print("begin Write in log file...")
         tmp_file = open('/home/tianhao.lu/code/Deep_snake/snake/Result/Contour/contour.log', 'w')
         tmp_file.writelines("anno type:" + str(type(anno)) + "\n")
         tmp_file.writelines("anno len:" + str(len(anno)) + "\n")
@@ -144,7 +171,7 @@ class Dataset(data.Dataset):
         # tmp_file.writelines("anno data:" + str(anno) + "\n")
         tmp_file.writelines("path type:" + str(type(path)) + "\n")
         tmp_file.writelines("path len:" + str(len(path)) + "\n")
-        tmp_file.writelines("path data:" + str(path) +"\n")
+        tmp_file.writelines("path data:" + str(path) + "\n")
         tmp_file.writelines("img_id type:" + str(type(img_id)) + "\n")
         tmp_file.writelines("img_id len:" + str(img_id.shape) + "\n")
         tmp_file.writelines("img_id data:" + str(img_id) + "\n")
@@ -153,12 +180,12 @@ class Dataset(data.Dataset):
         tmp_file.writelines("img data:" + str(img) + "\n")
         tmp_file.writelines("instance_polys type:" + str(type(instance_polys)) + "\n")
         tmp_file.writelines("instance_polys len:" + str(len(instance_polys)) + "\n")
-        tmp_file.writelines("instance_polys data:" + str(instance_polys) +"\n")
+        tmp_file.writelines("instance_polys data:" + str(instance_polys) + "\n")
         tmp_file.writelines("cls_ids type:" + str(type(cls_ids)) + "\n")
         tmp_file.writelines("cls_ids len:" + str(len(cls_ids)) + "\n")
         tmp_file.writelines("cls_ids data:" + str(cls_ids) + "\n")
-        tmp_file.writelines(str("*************************************************************** \n"))
-        tmp_file.close()
+        tmp_file.writelines(str("------------------------------------------------------------------- \n"))
+
 
         height, width = img.shape[0], img.shape[1]
         orig_img, inp, trans_input, trans_output, flipped, center, scale, inp_out_hw = \
@@ -169,7 +196,18 @@ class Dataset(data.Dataset):
             )
         instance_polys = self.transform_original_data(instance_polys, flipped, width, trans_output, inp_out_hw)
         instance_polys = self.get_valid_polys(instance_polys, inp_out_hw)
+        tmp_file.writelines("instance_polys type:" + str(type(instance_polys)) + "\n")
+        tmp_file.writelines("instance_polys len:" + str(len(instance_polys)) + "\n")
+        tmp_file.writelines("instance_polys data:" + str(instance_polys) + "\n")
+        tmp_file.writelines(str("------------------------------------------------------------------- \n"))
+
         extreme_points = self.get_extreme_points(instance_polys)
+
+        tmp_file.writelines("extreme_points type:" + str(type(extreme_points)) + "\n")
+        tmp_file.writelines("extreme_points len:" + str(len(extreme_points)) + "\n")
+        tmp_file.writelines("extreme_points data:" + str(extreme_points) + "\n")
+        tmp_file.writelines(str("*************************************************************** \n"))
+        tmp_file.close()
 
         # detection
         output_h, output_w = inp_out_hw[2:]
@@ -218,8 +256,8 @@ class Dataset(data.Dataset):
         ret.update(detection)
         ret.update(init)
         ret.update(evolution)
-        # visualize_utils.visualize_snake_detection(orig_img, ret)
-        # visualize_utils.visualize_snake_evolution(orig_img, ret)
+        visualize_utils.visualize_snake_detection(orig_img, ret)
+        visualize_utils.visualize_snake_evolution(orig_img, ret)
 
         ct_num = len(ct_ind)
         meta = {'center': center, 'scale': scale, 'img_id': img_id, 'ann': ann, 'ct_num': ct_num}

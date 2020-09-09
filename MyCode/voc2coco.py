@@ -84,7 +84,7 @@ def convert( xml_dir, json_file,imgs):
                 new_id = len(categories)
                 categories[category] = new_id
             category_id = categories[category]
-            bndbox = get_and_check(obj, 'bbox', 1)
+            bndbox = get_and_check(obj, 'bndbox', 1)
             xmin = int(get_and_check(bndbox, 'xmin', 1).text) - 1
             ymin = int(get_and_check(bndbox, 'ymin', 1).text) - 1
             xmax = int(get_and_check(bndbox, 'xmax', 1).text)
@@ -111,10 +111,10 @@ def convert( xml_dir, json_file,imgs):
 
 
 if __name__ == '__main__':
-    labelxml = "Annotations"
-    imgpath = "JPEGImages"
+    labelxml = "C:/Users/lth95/Project/snake/data/NICE1/NICE1/coco_int/train/voc_annotation"
+    imgpath = "C:/Users/lth95/Project/snake/data/NICE1/NICE1/coco_int/train/image"
     imgs = os.listdir(imgpath)
-    destjson = "voc2coco.json"
+    destjson = "C:/Users/lth95/Project/snake/data/NICE1/NICE1/coco_int/train/voc_annotation/voc2coco.json"
     # if len(sys.argv) <= 1:
     #     print('3 auguments are need.')
     #     print('Usage: %s XML_LIST.txt XML_DIR OUTPU_JSON.json'%(sys.argv[0]))

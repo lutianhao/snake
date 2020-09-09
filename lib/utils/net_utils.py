@@ -317,6 +317,7 @@ def load_network(net, model_dir, resume=True, epoch=-1, strict=True):
     pths = [int(pth.split('.')[0]) for pth in os.listdir(model_dir) if 'pth' in pth]
     if len(pths) == 0:
         print(colored('WARNING: NO MODEL LOADED !!!', 'red'))
+        print("pths = 0")
         return 0
     if epoch == -1:
         pth = max(pths)

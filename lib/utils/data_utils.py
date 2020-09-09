@@ -371,7 +371,7 @@ def _topk(scores, K=40):
 
 
 def clip_to_image(bbox, h, w):
-    bbox[..., :2] = torch.clamp(bbox[..., :2], min=0)
+    bbox[..., :2] = torch.clamp(bbox[..., :2], min=0)  #将输入input张量每个元素的夹紧到区间 [min,max][min,max]，并返回结果到一个新张量。
     bbox[..., 2] = torch.clamp(bbox[..., 2], max=w-1)
     bbox[..., 3] = torch.clamp(bbox[..., 3], max=h-1)
     return bbox

@@ -76,6 +76,7 @@ class Snake(nn.Module):
     def forward(self, x, adj):
         states = []
 
+
         x = self.head(x, adj)
         states.append(x)
         for i in range(self.res_layer_num):

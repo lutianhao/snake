@@ -53,7 +53,7 @@ def topk(scores, K=40):
 
 def decode_ct_hm(ct_hm, wh, reg=None, K=100):
     batch, cat, height, width = ct_hm.size()
-    ct_hm = nms(ct_hm)
+    ct_hm = nms(ct_hm)  #nms极大值抑制，即多个相邻的框的话就算成一个较大的框而不是这几个框都输出。
 
     scores, inds, clses, ys, xs = topk(ct_hm, K=K)
     wh = transpose_and_gather_feat(wh, inds)
@@ -108,7 +108,7 @@ def gaussian_radius(height, width, min_overlap=0.7):
     r3 = r3_01 * r31 + (1 - r3_01) * r32
 
     radius = torch.clamp(torch.min(torch.min(r1, r2), r3), min=0) / 3
-    return torch.round(radius).long()
+    return torch.round(radius).long()   #返回一个新的张量，其中输入的每个元素都舍入到最接近的整数。
 
 
 def decode_ext_hm(ext_hm, bbox, vote, ct):
@@ -121,7 +121,7 @@ def decode_ext_hm(ext_hm, bbox, vote, ct):
     return extreme_point
 
 
-def get_quadrangle(box):
+def get_quadrangle(box):     #box获取的是本来的box的各边的中心点坐标
     x_min, y_min, x_max, y_max = box[..., 0], box[..., 1], box[..., 2], box[..., 3]
     quadrangle = [
         (x_min + x_max) / 2., y_min,
@@ -133,7 +133,7 @@ def get_quadrangle(box):
     return quadrangle
 
 
-def get_box(box):
+def get_box(box):   #这个获得的是矩形框的四个角点以及各边的中心点
     x_min, y_min, x_max, y_max = box[..., 0], box[..., 1], box[..., 2], box[..., 3]
     box = [
         (x_min + x_max) / 2., y_min,

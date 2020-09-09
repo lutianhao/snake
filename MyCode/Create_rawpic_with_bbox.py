@@ -13,10 +13,16 @@ import cv2
 #3.将矩形坐标等信息保存在新建的文件夹里面，可以是数值也可以是图片
 
 
-Pic_PATH = '../data/NICE1/NICE1/'
-Param_bbox_PATH = '../data/NICE1/NICE1/coco/test/iris_edge_bbox/'
-Pic_Save_PATH = '../data/NICE1/NICE1/coco/test/'  #修改一下train和test
-# Pic_Save_PATH = '../data/NICE1/NICE1/coco/test/'
+Pic_PATH = '../data/NICE1/NICE1/coco_int/'
+# Param_iris_bbox_PATH = '../data/NICE1/NICE1/coco_int/train/iris_edge_bbox/' #修改一下train、val和test
+# Param_pupil_bbox_PATH = '../data/NICE1/NICE1/coco_int/train/pupil_edge_bbox/'
+# Pic_Save_PATH = '../data/NICE1/NICE1/coco_int/train/'
+Param_iris_bbox_PATH = '../data/NICE1/NICE1/coco_int/val/iris_edge_bbox/'
+Param_pupil_bbox_PATH = '../data/NICE1/NICE1/coco_int/val/pupil_edge_bbox/'
+Pic_Save_PATH = '../data/NICE1/NICE1/coco_int/val/'
+# Param_iris_bbox_PATH = '../data/NICE1/NICE1/coco_int/test/iris_edge_bbox/'
+# Param_pupil_bbox_PATH = '../data/NICE1/NICE1/coco_int/test/pupil_edge_bbox/'
+# Pic_Save_PATH = '../data/NICE1/NICE1/coco_int/test/'
 
 
 
@@ -45,8 +51,9 @@ def getFileList(dir, Filelist, ext=None):
     return Filelist
 
 
-# org_img_folder = os.path.join(Pic_PATH,'coco/train/image')    #这里修改train和test
-org_img_folder = os.path.join(Pic_PATH,'coco/test/image')
+# org_img_folder = os.path.join(Pic_PATH,'train/image')    #这里修改train、val和test
+org_img_folder = os.path.join(Pic_PATH,'val/image')
+# org_img_folder = os.path.join(Pic_PATH,'test/image')
 
 # 检索文件
 print("当前图片路径为：{}".format(org_img_folder))
@@ -62,15 +69,30 @@ for imgpath in imglist:
     #  实例化configParser对象
     config = configparser.ConfigParser()
     # -read读取ini文件
-    if not os.path.isfile(Param_bbox_PATH+imgname+'.ini'):
-        print(Param_bbox_PATH+imgname+'.ini')
+    if not os.path.isfile(Param_iris_bbox_PATH+imgname+'.ini'):
+        print(Param_iris_bbox_PATH+imgname+'.ini')
+        print("{}.ini 文件不存在".format(imgname))
+    elif not os.path.isfile(Param_pupil_bbox_PATH+imgname+'.ini'):
+        print(Param_pupil_bbox_PATH + imgname + '.ini')
         print("{}.ini 文件不存在".format(imgname))
     else:
-        config.read(Param_bbox_PATH + imgname + '.ini')
+        #画外框
+        config.read(Param_iris_bbox_PATH + imgname + '.ini')
         iris_centerX = config.get('bbox', 'x')
         iris_centerY = config.get('bbox', 'y')
         iris_wdith = config.get('bbox', 'width')
         iris_height = config.get('bbox','height')
+        x = int(iris_centerX)
+        y = int(iris_centerY)
+        w = int(iris_wdith)
+        h = int(iris_height)
+        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        #画内框
+        config.read(Param_pupil_bbox_PATH + imgname + '.ini')
+        iris_centerX = config.get('bbox', 'x')
+        iris_centerY = config.get('bbox', 'y')
+        iris_wdith = config.get('bbox', 'width')
+        iris_height = config.get('bbox', 'height')
         x = int(iris_centerX)
         y = int(iris_centerY)
         w = int(iris_wdith)

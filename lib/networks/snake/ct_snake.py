@@ -54,9 +54,16 @@ class Network(nn.Module):
         output, cnn_feature = self.dla(x)
         with torch.no_grad():
             ct, detection = self.decode_detection(output, cnn_feature.size(2), cnn_feature.size(3))
+        # tmp_file = open('/home/tianhao.lu/code/Deep_snake/snake/Result/Contour/contour.log', 'w')
+        # tmp_file.writelines("Output: " + str(output) + "\n")
+        # tmp_file.writelines("ct: " + str(ct) + "\n")
+        # tmp_file.writelines("detection:" + str(detection) + "\n")
+        # tmp_file.writelines(str("*************************************************************** \n"))
+        # tmp_file.close()
         if cfg.use_gt_det:
             self.use_gt_detection(output, batch)
         output = self.gcn(output, cnn_feature, batch)
+
         return output
 
 

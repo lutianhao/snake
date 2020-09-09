@@ -92,7 +92,7 @@ def process_info(fname, data_root):
             continue
         examples.append(instance)
 
-    img_path = os.path.join(data_root, '\'.join(ann[0]['img_path'].split('\')[-3:]))
+    img_path = os.path.join(data_root, '/'.join(ann[0]['img_path'].split('/')[-3:]))
     img_id = ann[0]['image_id']
 
     return examples, img_path, img_id

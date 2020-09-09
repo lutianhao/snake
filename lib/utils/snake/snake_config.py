@@ -1,9 +1,11 @@
 import numpy as np
 from lib.config import cfg
 
-
-mean = np.array([0.40789654, 0.44719302, 0.47026115],dtype=np.float32).reshape(1, 1, 3)
-std = np.array([0.28863828, 0.27408164, 0.27809835],dtype=np.float32).reshape(1, 1, 3)
+# #这里更改了相应的数据集的均值和标准差
+# mean = np.array([0.40789654, 0.44719302, 0.47026115],dtype=np.float32).reshape(1, 1, 3)
+# std = np.array([0.28863828, 0.27408164, 0.27809835],dtype=np.float32).reshape(1, 1, 3)
+mean = np.array([0.5080979, 0.35930751, 0.30707624],dtype=np.float32).reshape(1, 1, 3)
+std = np.array([0.18339003, 0.15103811, 0.14668275],dtype=np.float32).reshape(1, 1, 3)
 data_rng = np.random.RandomState(123)
 eig_val = np.array([0.2141788, 0.01817699, 0.00341571],dtype=np.float32)
 eig_vec = np.array([
@@ -31,7 +33,7 @@ spline_num = 10
 
 adj_num = 4
 
-train_pred_box = False
+train_pred_box = True
 box_iou = 0.7
 confidence = 0.1
 train_pred_box_only = True
@@ -43,5 +45,5 @@ ct_score = cfg.ct_score
 
 ro = 4
 
-segm_or_bbox = 'segm'
+segm_or_bbox = 'bbox'
 

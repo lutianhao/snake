@@ -56,8 +56,12 @@ def get_box_match_ind(pred_box, score, gt_poly):
     return box_ind, gt_ind
 
 
-def prepare_training_box(ret, batch, init):
+def prepare_training_box(ret, batch, init):  #这里准备的是用于训练的bbox框
     box = ret['detection'][..., :4]
+    # tmp_file = open('/home/tianhao.lu/code/Deep_snake/snake/Result/Contour/contour.log', 'w')
+    # tmp_file.writelines("bbox:" + str(box) + "\n")
+    # tmp_file.writelines(str("*************************************************************** \n"))
+    # tmp_file.close()
     score = ret['detection'][..., 4]
     batch_size = box.size(0)
     i_gt_4py = batch['i_gt_4py']
@@ -116,7 +120,7 @@ def prepare_training(ret, batch):
     init.update({'py_ind': init['4py_ind']})
 
     if snake_config.train_pred_box:
-        prepare_training_box(ret, batch, init)
+        prepare_training_box(ret, batch, init)     #这里准备bbox
 
     init['4py_ind'] = init['4py_ind'].to(ct_01.device)
     init['py_ind'] = init['py_ind'].to(ct_01.device)

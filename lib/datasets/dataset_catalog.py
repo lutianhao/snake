@@ -3,57 +3,52 @@ from lib.config import cfg
 
 class DatasetCatalog(object):
     dataset_attrs = {
-        'CocoTrain': {
-            'id': 'coco',
-            'data_root': 'data/NICE1/NICE1/coco/train',
-            'ann_file': 'data/NICE1/NICE1/coco/train/annotations/NICE_train.json',
+        'NICE1Train': {
+            'id': 'NICE',
+            'data_root': 'data/NICE1/NICE1/coco_int/train/image',
+            'ann_file': 'data/NICE1/NICE1/coco_int/train/annotations/NICE_train.json',
             'split': 'train'
         },
-        'CocoTest': {
-            'id': 'coco',
-            'data_root': 'data/NICE1/NICE1/coco/test',
-            'ann_file': 'data/NICE1/NICE1/coco/test/annotations/NICE_test.json',
+        'NICE1Val': {
+            'id': 'NICE',
+            'data_root': 'data/NICE1/NICE1/coco_int/val/image',
+            'ann_file': 'data/NICE1/NICE1/coco_int/val/annotations/NICE_val.json',
             'split': 'test'
+        },
+        'NICE1Test': {
+            'id': 'NICE',
+            'data_root': 'data/NICE1/NICE1/coco_int/test/image',
+            'ann_file': 'data/NICE1/NICE1/coco_int/test/annotations/NICE_test.json',
+            'split': 'test'
+        },
+
+
+
+        # '''*********************************************************************************************'''
+        'CocoTrain': {
+            'id': 'coco',
+            'data_root': 'data/coco/train2017',
+            'ann_file': 'data/coco/annotations/instances_train2017.json',
+            'split': 'train'
         },
         'CocoVal': {
             'id': 'coco',
-            'data_root': 'data/NICE1/NICE1/coco/test',
-            'ann_file': 'data/NICE1/NICE1/coco/test/annotations/NICE_test.json',
+            'data_root': 'data/coco/val2017',
+            'ann_file': 'data/coco/annotations/instances_val2017.json',
             'split': 'test'
         },
         'CocoMini': {
             'id': 'coco',
-            'data_root': 'data/NICE1/NICE1/coco/test',
-            'ann_file': 'data/NICE1/NICE1/coco/test/annotations/NICE_test.json',
+            'data_root': 'data/coco/val2017',
+            'ann_file': 'data/coco/annotations/instances_val2017.json',
             'split': 'mini'
         },
-
-
-        # '''*********************************************************************************************'''
-        # 'CocoTrain': {
-        #     'id': 'coco',
-        #     'data_root': 'data/coco/train2017',
-        #     'ann_file': 'data/coco/annotations/instances_train2017.json',
-        #     'split': 'train'
-        # },
-        # 'CocoVal': {
-        #     'id': 'coco',
-        #     'data_root': 'data/coco/val2017',
-        #     'ann_file': 'data/coco/annotations/instances_val2017.json',
-        #     'split': 'test'
-        # },
-        # 'CocoMini': {
-        #     'id': 'coco',
-        #     'data_root': 'data/coco/val2017',
-        #     'ann_file': 'data/coco/annotations/instances_val2017.json',
-        #     'split': 'mini'
-        # },
-        # 'CocoTest': {
-        #     'id': 'coco_test',
-        #     'data_root': 'data/coco/test2017',
-        #     'ann_file': 'data/coco/annotations/image_info_test-dev2017.json',
-        #     'split': 'test'
-        # },
+        'CocoTest': {
+            'id': 'coco_test',
+            'data_root': 'data/coco/test2017',
+            'ann_file': 'data/coco/annotations/image_info_test-dev2017.json',
+            'split': 'test'
+        },
         'CityscapesTrain': {
             'id': 'cityscapes',
             'data_root': 'data/cityscapes/leftImg8bit',
